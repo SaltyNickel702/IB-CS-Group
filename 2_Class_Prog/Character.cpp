@@ -2,6 +2,7 @@
 #include <algorithm>
 using namespace std;
 
+vector<Character*> Character::characters;
 Character::Character (int sHealth) : weapon(nullptr), armor(nullptr), baseHealth(sHealth), DEAD(false) {
     characters.push_back(this);
 };
