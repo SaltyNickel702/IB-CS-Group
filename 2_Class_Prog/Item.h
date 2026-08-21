@@ -8,6 +8,10 @@ struct Item {
     int damageModifier;
     int mhealthModifier;
     int heal;
+
+    enum Types {
+        //ex. Weapon, Potion...
+    };
 };
 
 #endif

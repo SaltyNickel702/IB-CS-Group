@@ -3,11 +3,15 @@
 #include "Item.h"
 #include <vector>
 
+
+
 struct Character {
     Character();
 
-    void hurt();
-    void attack();
+    void hurt(int damageAmount); //Assessing damage amount and evaluating against item buffs
+    void attack(Character &attackedCharacter); //attacks character by evaluating items held and dealing damage
+
+    int Health;
 
     std::vector<Item> items;
 };
