@@ -4,4 +4,9 @@ Character::Character () {
 
 };
 
-void Character::attack ()
+void Character::attack (Character &c) {
+
+};
+void Character::hurt (int dmg) {
+
+};

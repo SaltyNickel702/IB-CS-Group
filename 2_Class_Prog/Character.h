@@ -13,7 +13,9 @@ struct Character {
 
     int Health;
 
-    std::vector<Item> items;
+    std::vector<Item> passives;
+    std::vector<Item> consumables;
+    Item weapon;
 };
 
 #endif
