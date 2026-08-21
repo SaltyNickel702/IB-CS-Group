@@ -2,6 +2,7 @@
 #define CHAR_H
 #include "Item.h"
 #include <vector>
+#include <string>
 
 
 
@@ -13,6 +14,8 @@ struct Character {
     void giveItem (Item* item);
 
     int health;
+
+    std::string name;
 
     std::vector<Item*> passives;
     std::vector<Item*> potions;
