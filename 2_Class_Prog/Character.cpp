@@ -1,11 +1,53 @@
 #include "Character.h"
 #include <algorithm>
 #include <format>
+#include <random>
+#include <cmath>
+
 using namespace std;
 
 Character::Effect::Effect (Item p) {
     potionBase = p;
     length = potionBase.potionDuration;
+}
+
+Character::LootBundle::LootBundle (Character &c, float proportion = 1.0) {
+    vector<Item*> al; //All loot
+    if (c.weapon) al.push_back(c.weapon);
+    if (c.armor) al.push_back(c.armor);
+    for (Item *i : c.passives) al.push_back(i);
+    for (Item *i : c.potions) al.push_back(i);
+
+    std::random_device rd;
+    std::mt19937 g(rd());
+    shuffle(al.begin(), al.end(), g);
+    
+    int deleteToIndex = round((al.size()-1)*(1-proportion));
+    for (int i = 0; i <= deleteToIndex; i++) {
+        delete al.at(i);
+    }
+    al.erase(al.begin(), al.begin() + deleteToIndex + 1);
+    loot = al;
+
+    //Delete loot on donor character
+    c.weapon = nullptr;
+    c.armor = nullptr;
+    c.passives.clear();
+    c.potions.clear();
+}
+void Character::LootBundle::GiveLoot(Character &c, int lI) {
+    if (lI == -1) {
+        while (loot.size() > 0) {
+            c.giveItem(loot.at(0));
+            loot.erase(loot.begin());
+        }
+    } else {
+        c.giveItem(loot.at(lI));
+        loot.erase(loot.begin() + lI + 1);
+    }
+}
+Character::LootBundle::~LootBundle () {
+    for (Item* i : loot) delete i;
 }
 
 vector<Character*> Character::characters;

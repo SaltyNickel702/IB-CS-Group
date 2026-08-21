@@ -7,12 +7,22 @@
 
 struct Character {
     Character(int startHealth);
+    
     struct Effect {
         Effect (Item potion);
 
         int length; //How many turns are left
         Item potionBase; //Copies effects of potion
     };
+    struct LootBundle {
+        LootBundle(Character &source, float proportion); // Only use on death, clears all Items from Character
+        std::vector<Item*> loot;
+        void GiveLoot (Character &destination, int lootIndex); //give specific loot piece
+        void GiveLoot (Character &destination) { GiveLoot(destination, -1); }
+
+        ~LootBundle();
+    };
+
     static std::vector<Character*> characters;
     static void updateTurn (); //Tells all active Characters that a turn has passed
 
@@ -27,8 +37,6 @@ struct Character {
 
     int health();
     std::string name;
-
-    vector<Item*> genLoot (float fraction);
 
     std::vector<Item*> passives; //Are pointers because items can be dropped
     std::vector<Item*> potions;
