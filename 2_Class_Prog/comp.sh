@@ -1,1 +1,1 @@
-g++ --std=c++20 main.cpp -o out
+g++ --std=c++20 main.cpp Character.cpp Item.cpp -o out
