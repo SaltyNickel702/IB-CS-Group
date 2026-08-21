@@ -33,9 +33,8 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
 {
     for (int i = 0; i < numberOfEnemies; i++)
     {
-        Character enemy;
+        Character enemy(100);
         enemy.name = "Enemy " + std::to_string(i + 1);
-        enemy.health = 100;
         Item* weapon = new Item(Item::Types::weapon);
         weapon->baseDamage = 10;
         enemy.weapon = weapon;
@@ -45,13 +44,13 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
 
 int main()
 {
-    Character player = Character();
+    Character player = Character(100);
     std::vector<Character> enemies;
     std::string userInput;
     bool playerTurn = true;
     int waves = 0;
 
-    while (player.health > 0)
+    while (player.health() > 0)
     {
         while (playerTurn)
         {
@@ -64,12 +63,12 @@ int main()
                 for (int i = 0; i < enemies.size(); i++)
                 {
                     // Print list of enemies
-                    std::cout << i + 1 << ": " << enemies[i].name << " (Health: " << enemies[i].health << ")\n";
+                    std::cout << i + 1 << ": " << enemies[i].name << " (Health: " << enemies[i].health() << ")\n";
                 }
                 getUserInput(1, enemies.size(), userInput);
                 // Attack enemy
                 player.attack(enemies[std::stoi(userInput) - 1]);
-                std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has " << enemies[std::stoi(userInput) - 1].health << " health remaining.\n";
+                std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has " << enemies[std::stoi(userInput) - 1].health() << " health remaining.\n";
 
                 playerTurn = false;
                 if (enemies.size() == 0)
@@ -97,8 +96,8 @@ int main()
                 getUserInput(1, player.potions.size(), userInput);
                 // Use item
                 playerTurn = false;
-                player.health += player.potions[std::stoi(userInput) - 1]->heal;
-                std::cout << "Player has " << player.health << " health remaining.\n";
+                player.health() += player.potions[std::stoi(userInput) - 1]->heal;
+                std::cout << "Player has " << player.health() << " health remaining.\n";
                 player.potions.erase(player.potions.begin() + std::stoi(userInput) - 1);
             }
             else
@@ -112,7 +111,7 @@ int main()
             // Enemy turn
             enemies[i].attack(player);
             std::cout << "Enemy " << enemies[i].name << " attacked player for " << enemies[i].weapon->baseDamage << " damage.\n";
-            std::cout << "Player has " << player.health << " health remaining.\n";
+            std::cout << "Player has " << player.health() << " health remaining.\n";
         }
     };
 
