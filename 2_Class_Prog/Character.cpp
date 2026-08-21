@@ -1,10 +1,17 @@
 #include "Character.h"
 #include <algorithm>
+#include <format>
 using namespace std;
+
+Character::Effect::Effect (Item p) {
+    potionBase = p;
+    length = potionBase.potionDuration;
+}
 
 vector<Character*> Character::characters;
 Character::Character (int sHealth) : weapon(nullptr), armor(nullptr), baseHealth(sHealth), DEAD(false) {
     characters.push_back(this);
+    name = format("Char-{}",characters.size()-1); //Default name, can be overriden
 };
 Character::~Character () {
     auto i = find(characters.begin(), characters.end(), this);
@@ -12,13 +19,30 @@ Character::~Character () {
         characters.erase(i);
     }
 }
+void Character::updateTurn () {
+    for (Character *c : characters) {
+        vector<Effect*> toDel;
+        for (int i = 0; i < c->effects.size(); i++) {
+            Effect &e = c->effects[i];
+            e.length--;
+            if (e.length < 0) {
+                c->effects.erase(c->effects.begin() + i);
+                i--;
+            }
+        }
+    }
+}
 
-int Character::health () {return baseHealth + modHealth();};
-int Character::modHealth () {
+int Character::health () {return baseHealth + healthMod();};
+int Character::healthMod () {
     int hp = 0;
     for (Effect e : effects) {
         hp+= e.potionBase.maxHealthModifier;
     }
+    for (Item* p : passives) {
+        hp+= p->maxHealthModifier;
+    }
+    return hp;
 }
 
 void Character::attack (Character &c) {
@@ -35,3 +59,30 @@ void Character::hurt (int dmg) {
     baseHealth -= dmg;
     if (health() <= 0) DEAD = true;
 };
+
+void Character::giveItem (Item* i) {
+    switch (i->ItemType) {
+        case Item::Types::armor:
+            if (armor) delete armor;
+            armor = i;
+            break;
+        case Item::Types::charm:
+            passives.push_back(i);
+            break;
+        case Item::Types::weapon:
+            if (weapon) delete weapon;
+            weapon = i;
+            break;
+        case Item::Types::potion:
+            potions.push_back(i);
+    }
+}
+void Character::usePotion (int i) {
+    Item* p = potions.at(i);
+    Effect e = Effect(*p);
+    effects.push_back(e);
+
+    potions.erase(potions.begin() + i);
+    delete p;
+}
+

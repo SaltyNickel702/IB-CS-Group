@@ -8,12 +8,10 @@
 struct Character {
     Character(int startHealth);
     struct Effect {
-        Effect (int length);
+        Effect (Item potion);
 
         int length; //How many turns are left
         Item potionBase; //Copies effects of potion
-
-        ~Effect();
     };
     static std::vector<Character*> characters;
     static void updateTurn (); //Tells all active Characters that a turn has passed
@@ -28,6 +26,7 @@ struct Character {
 
 
     int health();
+    std::string name;
 
     vector<Item*> genLoot (float fraction);
 
@@ -41,7 +40,7 @@ struct Character {
 
     private:
        int baseHealth; //base health w/out effects
-       int modHealth();
+       int healthMod();
 };
 
 #endif

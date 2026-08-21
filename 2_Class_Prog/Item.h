@@ -22,6 +22,6 @@ struct Item {
     int heal; //Amount of health the item heals
     int defense; //flat damage reduction of the item
 
-    int potionDuraction; //Amount of turns a potion is active after use
+    int potionDuration; //Amount of turns a potion is active after use
 };
 #endif
