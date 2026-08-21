@@ -96,7 +96,7 @@ int main()
                 getUserInput(1, player.potions.size(), userInput);
                 // Use item
                 playerTurn = false;
-                player.health() += player.potions[std::stoi(userInput) - 1]->heal;
+                player.usePotion(std::stoi(userInput) - 1);
                 std::cout << "Player has " << player.health() << " health remaining.\n";
                 player.potions.erase(player.potions.begin() + std::stoi(userInput) - 1);
             }
