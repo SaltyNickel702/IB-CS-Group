@@ -27,17 +27,11 @@ struct Character {
     void usePotion(int index);
 
 
-<<<<<<< Updated upstream
-    std::string name;
-
-    std::vector<Item*> passives;
-=======
     int health();
 
     vector<Item*> genLoot (float fraction);
 
     std::vector<Item*> passives; //Are pointers because items can be dropped
->>>>>>> Stashed changes
     std::vector<Item*> potions;
     Item* weapon;
     Item* armor;
