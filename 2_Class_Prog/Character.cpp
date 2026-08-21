@@ -1,11 +1,11 @@
 #include "Character.h"
 
-Character::Character () {
+Character::Character () : weapon(nullptr), armor(nullptr) {
 
 };
 
 void Character::attack (Character &c) {
-    int baseDamage.
+    int dmg;
 };
 void Character::hurt (int dmg) {
 

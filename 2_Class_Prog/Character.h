@@ -10,14 +10,14 @@ struct Character {
 
     void hurt(int damageAmount); //Assessing damage amount and evaluating against item buffs
     void attack(Character &attackedCharacter); //attacks character by evaluating items held and dealing damage
-    void giveItem (Item item);
-
+    void giveItem (Item* item);
 
     int health;
 
-    std::vector<Item> passives;
-    std::vector<Item> consumables;
-    Item weapon;
+    std::vector<Item*> passives;
+    std::vector<Item*> potions;
+    Item* weapon;
+    Item* armor;
 };
 
 #endif
