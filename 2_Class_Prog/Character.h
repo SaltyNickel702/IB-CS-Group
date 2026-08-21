@@ -10,6 +10,8 @@ struct Character {
 
     void hurt(int damageAmount); //Assessing damage amount and evaluating against item buffs
     void attack(Character &attackedCharacter); //attacks character by evaluating items held and dealing damage
+    void giveItem (Item item);
+
 
     int health;
 
