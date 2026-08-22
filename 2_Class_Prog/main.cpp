@@ -33,7 +33,7 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
 {
     for (int i = 0; i < numberOfEnemies; i++)
     {
-        Character enemy(100);
+        Character enemy(30);
         enemy.name = "Enemy " + std::to_string(i + 1);
         Item *weapon = new Item(Item::Types::weapon);
         weapon->baseDamage = 10;
@@ -45,6 +45,9 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
 int main()
 {
     Character player = Character(100);
+    player.name = "Player";
+    player.weapon = new Item(Item::Types::weapon);
+    player.weapon->baseDamage = 15;
     std::vector<Character> enemies;
     std::string userInput;
     bool playerTurn = true;
@@ -72,7 +75,15 @@ int main()
                 getUserInput(1, enemies.size(), userInput);
                 // Attack enemy
                 player.attack(enemies[std::stoi(userInput) - 1]);
-                std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has " << enemies[std::stoi(userInput) - 1].health() << " health remaining.\n";
+                if (enemies[std::stoi(userInput) - 1].health() <= 0)
+                {
+                    std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has been defeated!\n";
+                    enemies.erase(enemies.begin() + std::stoi(userInput) - 1);
+                }
+                else
+                {
+                    std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has " << enemies[std::stoi(userInput) - 1].health() << " health remaining.\n";
+                }
 
                 playerTurn = false;
                 if (enemies.size() == 0)
