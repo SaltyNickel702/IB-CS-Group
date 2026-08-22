@@ -1,5 +1,8 @@
 #include "Item.h"
 #include <cstdlib>
+#include <ctime>
+
+using namespace std;
 
 Item::Item(Types t)
 {
@@ -17,6 +20,7 @@ Item::Item(Types t)
     // It'll roll the dice here to get a random different type.
     if (ItemType == random)
     {
+        srand(time(0));
         ItemType = static_cast<Types>(rand() % 4 + 1);
     }
 
