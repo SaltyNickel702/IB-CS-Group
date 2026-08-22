@@ -166,7 +166,6 @@ int main()
                     playerTurn = false;
                     player.usePotion(std::stoi(userInput) - 1);
                     std::cout << "Player has " << player.health() << " health remaining.\n";
-                    player.potions.erase(player.potions.begin() + std::stoi(userInput) - 1);
                 }
             }
             else
