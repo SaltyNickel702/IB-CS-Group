@@ -35,19 +35,19 @@ Item::Item(Types t)
         switch (rarity)
         {
         case 1:
-            baseDamage = 1;
+            baseDamage = 15;
             break;
 
         case 2:
-            baseDamage = 2;
+            baseDamage = 20;
             break;
 
         case 3:
-            baseDamage = 3;
+            baseDamage = 25;
             break;
 
         case 4:
-            baseDamage = 4;
+            baseDamage = 30;
             break;
         }
 

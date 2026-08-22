@@ -96,7 +96,7 @@ void Character::attack (Character &c) {
     c.hurt(dmg);
 };
 void Character::hurt (int dmg) {
-    int defence = armor ? armor->maxHealthModifier : 0;
+    int defence = armor ? armor->defense : 0;
     dmg = max(dmg - defence,0);
     baseHealth -= dmg;
     if (health() <= 0) DEAD = true;
@@ -105,15 +105,35 @@ void Character::hurt (int dmg) {
 void Character::giveItem (Item* i) {
     switch (i->ItemType) {
         case Item::Types::armor:
-            if (armor) delete armor;
-            armor = i;
+            if (!armor) {
+                armor = i;
+            } else {
+                // Only pick up armor if its defense is strictly greater
+                if (i->defense > armor->defense) {
+                    delete armor;
+                    armor = i;
+                } else {
+                    // Not better: discard incoming item
+                    delete i;
+                }
+            }
             break;
         case Item::Types::charm:
             passives.push_back(i);
             break;
         case Item::Types::weapon:
-            if (weapon) delete weapon;
-            weapon = i;
+            if (!weapon) {
+                weapon = i;
+            } else {
+                // Only pick up weapon if its base damage is strictly greater
+                if (i->baseDamage > weapon->baseDamage) {
+                    delete weapon;
+                    weapon = i;
+                } else {
+                    // Not better: discard incoming item
+                    delete i;
+                }
+            }
             break;
         case Item::Types::potion:
             potions.push_back(i);

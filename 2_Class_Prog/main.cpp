@@ -56,7 +56,7 @@ int main()
     generateEnemies(enemies, 1);
     std::cout << "Welcome to the Battle Game!\nSurvive 10 waves of enemies to win.\n";
 
-    while (player.health() > 0)
+    while (!player.DEAD)
     {
         std::cout << enemies.size() << " enemies remain.\n";
         while (playerTurn)
@@ -75,9 +75,55 @@ int main()
                 getUserInput(1, enemies.size(), userInput);
                 // Attack enemy
                 player.attack(enemies[std::stoi(userInput) - 1]);
-                if (enemies[std::stoi(userInput) - 1].health() <= 0)
+                if (enemies[std::stoi(userInput) - 1].DEAD)
                 {
                     std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has been defeated!\n";
+                    // Create two random drops
+                    Item* drop1 = new Item(Item::Types::random);
+                    Item* drop2 = new Item(Item::Types::random);
+
+                    auto describe = [&](Item* it) {
+                        switch (it->ItemType) {
+                            case Item::Types::weapon:
+                                std::cout << "Weapon (Damage: " << it->baseDamage << ")";
+                                break;
+                            case Item::Types::armor:
+                                std::cout << "Armor (Defense: " << it->defense << ")";
+                                break;
+                            case Item::Types::charm:
+                                std::cout << "Charm (DMG Mod: " << it->damageModifier << ", HP Mod: " << it->maxHealthModifier << ")";
+                                break;
+                            case Item::Types::potion:
+                                std::cout << "Potion (Heal: " << it->heal << ")";
+                                break;
+                            default:
+                                std::cout << "Unknown Item";
+                                break;
+                        }
+                    };
+
+                    std::cout << "The enemy dropped two items:\n";
+                    std::cout << "1: "; describe(drop1); std::cout << "\n";
+                    std::cout << "2: "; describe(drop2); std::cout << "\n";
+
+                    // Let player pick up items one at a time
+                    std::cout << "Pick up item 1? (1: yes, 0: no)\n";
+                    std::string pick;
+                    getUserInput(0, 1, pick); // we will interpret 0->n 1->y below
+                    if (pick == "1") {
+                        player.giveItem(drop1);
+                    } else {
+                        delete drop1;
+                    }
+
+                    std::cout << "Pick up item 2? (1: yes, 0: no)\n";
+                    getUserInput(0, 1, pick);
+                    if (pick == "1") {
+                        player.giveItem(drop2);
+                    } else {
+                        delete drop2;
+                    }
+
                     enemies.erase(enemies.begin() + std::stoi(userInput) - 1);
                 }
                 else
@@ -88,7 +134,7 @@ int main()
                 playerTurn = false;
                 if (enemies.size() == 0)
                 {
-                    std::cout << "New Enemies Appear\n";
+                    std::cout << floor(waves / 3) + 1 << " New Enemies Appear\n";
                     // Add new enemies to the vector
                     generateEnemies(enemies, floor(waves / 3) + 1);
                     playerTurn = true;
