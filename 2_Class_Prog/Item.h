@@ -1,9 +1,10 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-struct Item {
-    enum Types {
-        //ex. Weapon, Potion...
+struct Item
+{
+    enum Types
+    {
         random,
         weapon,
         charm,
@@ -11,17 +12,19 @@ struct Item {
         potion
     };
 
-    Item(Item::Types type = Types::random);
+    Item(Types type = random);
 
+    int rarityRoll();
 
-    Item::Types ItemType;
+    Types ItemType;
 
-    int baseDamage; //base damage of the item
-    int damageModifier; //damage modifier of the item
-    int maxHealthModifier; //max health modifier of the item
-    int heal; //Amount of health the item heals
-    int defense; //flat damage reduction of the item
+    int baseDamage;         // Base damage of the item
+    int damageModifier;     // Damage modifier of the item
+    int maxHealthModifier;  // Max health modifier of the item
+    int heal;               // Amount of health the item heals
+    int defense;            // Flat damage reduction of the item
 
-    int potionDuration; //Amount of turns a potion is active after use
+    int potionDuration;     // Amount of turns a potion is active
 };
+
 #endif
