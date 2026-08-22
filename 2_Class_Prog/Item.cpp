@@ -139,6 +139,7 @@ Item::Item(Types t)
     case potion:
     {
         int rarity = rarityRoll();
+        potionDuration = 2;
 
         switch (rarity)
         {

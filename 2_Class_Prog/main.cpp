@@ -48,6 +48,7 @@ int main()
     player.name = "Player";
     player.weapon = new Item(Item::Types::weapon);
     player.weapon->baseDamage = 15;
+    player.giveItem(new Item(Item::Types::potion));
     std::vector<Character> enemies;
     std::string userInput;
     bool playerTurn = true;

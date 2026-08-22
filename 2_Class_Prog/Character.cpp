@@ -143,7 +143,13 @@ void Character::giveItem (Item* i) {
     }
 }
 void Character::usePotion (int i) {
+    if (i < 0 || i >= potions.size()) {
+        return;
+    }
+
     Item* p = potions.at(i);
+    baseHealth += p->heal;
+
     Effect e = Effect(*p);
     effects.push_back(e);
 
