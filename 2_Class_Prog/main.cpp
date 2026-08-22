@@ -35,7 +35,7 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
     {
         Character enemy(100);
         enemy.name = "Enemy " + std::to_string(i + 1);
-        Item* weapon = new Item(Item::Types::weapon);
+        Item *weapon = new Item(Item::Types::weapon);
         weapon->baseDamage = 10;
         enemy.weapon = weapon;
         enemies.push_back(enemy);
@@ -50,8 +50,12 @@ int main()
     bool playerTurn = true;
     int waves = 0;
 
+    generateEnemies(enemies, 1);
+    std::cout << "Welcome to the Battle Game!\nSurvive 10 waves of enemies to win.\n";
+
     while (player.health() > 0)
     {
+        std::cout << enemies.size() << " enemies remain.\n";
         while (playerTurn)
         {
             std::cout << "Select Action\n1:Attack\n2:Items\n";
@@ -79,7 +83,8 @@ int main()
                     playerTurn = true;
                     waves++;
 
-                    if (waves == 10) {
+                    if (waves == 10)
+                    {
                         std::cout << "Victory!\n";
                         return 0;
                     }
@@ -87,18 +92,25 @@ int main()
             }
             else if (userInput == "2")
             {
-                std::cout << "Select Item to Use\n";
-                for (int i = 0; i < player.potions.size(); i++)
+                if (player.potions.size() == 0)
                 {
-                    // Print list of items
-                    std::cout << i + 1 << ": Health Potion: " << player.potions[i]->heal << " HP\n";
+                    std::cout << "No items available.\n";
                 }
-                getUserInput(1, player.potions.size(), userInput);
-                // Use item
-                playerTurn = false;
-                player.usePotion(std::stoi(userInput) - 1);
-                std::cout << "Player has " << player.health() << " health remaining.\n";
-                player.potions.erase(player.potions.begin() + std::stoi(userInput) - 1);
+                else
+                {
+                    std::cout << "Select Item to Use\n";
+                    for (int i = 0; i < player.potions.size(); i++)
+                    {
+                        // Print list of items
+                        std::cout << i + 1 << ": Health Potion: " << player.potions[i]->heal << " HP\n";
+                    }
+                    getUserInput(1, player.potions.size(), userInput);
+                    // Use item
+                    playerTurn = false;
+                    player.usePotion(std::stoi(userInput) - 1);
+                    std::cout << "Player has " << player.health() << " health remaining.\n";
+                    player.potions.erase(player.potions.begin() + std::stoi(userInput) - 1);
+                }
             }
             else
             {
@@ -113,6 +125,7 @@ int main()
             std::cout << "Enemy " << enemies[i].name << " attacked player for " << enemies[i].weapon->baseDamage << " damage.\n";
             std::cout << "Player has " << player.health() << " health remaining.\n";
         }
+        playerTurn = true;
     };
 
     return 0;

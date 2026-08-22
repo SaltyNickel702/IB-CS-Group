@@ -53,7 +53,7 @@ Character::LootBundle::~LootBundle () {
 vector<Character*> Character::characters;
 Character::Character (int sHealth) : weapon(nullptr), armor(nullptr), baseHealth(sHealth), DEAD(false) {
     characters.push_back(this);
-    name = format("Char-{}",characters.size()-1); //Default name, can be overriden
+    name = "Char-" + to_string(characters.size()-1); //Default name, can be overriden
 };
 Character::~Character () {
     auto i = find(characters.begin(), characters.end(), this);
@@ -117,6 +117,9 @@ void Character::giveItem (Item* i) {
             break;
         case Item::Types::potion:
             potions.push_back(i);
+            break;
+        case Item::Types::random:
+            break;
     }
 }
 void Character::usePotion (int i) {
