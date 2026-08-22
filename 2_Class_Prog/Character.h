@@ -16,6 +16,7 @@ struct Character {
     };
     struct LootBundle {
         LootBundle(Character &source, float proportion); // Only use on death, clears all Items from Character
+        LootBundle(Character &source) : LootBundle(source,1.0) {};
         std::vector<Item*> loot;
         void GiveLoot (Character &destination, int lootIndex); //give specific loot piece
         void GiveLoot (Character &destination) { GiveLoot(destination, -1); }

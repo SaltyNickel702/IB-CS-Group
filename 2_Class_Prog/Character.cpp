@@ -11,7 +11,7 @@ Character::Effect::Effect (Item p) {
     length = potionBase.potionDuration;
 }
 
-Character::LootBundle::LootBundle (Character &c, float proportion = 1.0) {
+Character::LootBundle::LootBundle (Character &c, float proportion) {
     vector<Item*> al; //All loot
     if (c.weapon) al.push_back(c.weapon);
     if (c.armor) al.push_back(c.armor);
