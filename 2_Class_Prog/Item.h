@@ -12,7 +12,8 @@ struct Item
         potion
     };
 
-    Item(Types type = random);
+    Item(Types type);
+    Item() : Item(Types::random) {};
 
     int rarityRoll();
 

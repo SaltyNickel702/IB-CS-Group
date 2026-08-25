@@ -36,8 +36,9 @@ void generateEnemies(std::vector<Character> &enemies, int numberOfEnemies)
         Character enemy(30);
         enemy.name = "Enemy " + std::to_string(i + 1);
         Item *weapon = new Item(Item::Types::weapon);
-        weapon->baseDamage = 10;
-        enemy.weapon = weapon;
+        // weapon->baseDamage = 10;
+        enemy.giveItem(weapon);
+        enemy.giveItem(new Item()); //Gives bonus item
         enemies.push_back(enemy);
     }
 }
@@ -59,6 +60,7 @@ int main()
 
     while (!player.DEAD)
     {
+        std::cout << "\n\n";
         std::cout << enemies.size() << " enemies remain.\n";
         while (playerTurn)
         {
