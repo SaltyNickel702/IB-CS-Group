@@ -77,11 +77,13 @@ int main()
                 // Attack enemy
                 player.attack(enemies[std::stoi(userInput) - 1]);
                 if (enemies[std::stoi(userInput) - 1].DEAD)
-                {
+                {  
                     std::cout << "Enemy " << enemies[std::stoi(userInput) - 1].name << " has been defeated!\n";
                     // Create two random drops
-                    Item* drop1 = new Item(Item::Types::random);
-                    Item* drop2 = new Item(Item::Types::random);
+                    // Item* drop1 = new Item(Item::Types::random);
+                    // Item* drop2 = new Item(Item::Types::random);
+
+
 
                     auto describe = [&](Item* it) {
                         switch (it->ItemType) {
@@ -103,26 +105,40 @@ int main()
                         }
                     };
 
-                    std::cout << "The enemy dropped two items:\n";
-                    std::cout << "1: "; describe(drop1); std::cout << "\n";
-                    std::cout << "2: "; describe(drop2); std::cout << "\n";
+                    // std::cout << "The enemy dropped two items:\n";
+                    // std::cout << "1: "; describe(drop1); std::cout << "\n";
+                    // std::cout << "2: "; describe(drop2); std::cout << "\n";
 
-                    // Let player pick up items one at a time
-                    std::cout << "Pick up item 1? (1: yes, 0: no)\n";
-                    std::string pick;
-                    getUserInput(0, 1, pick); // we will interpret 0->n 1->y below
-                    if (pick == "1") {
-                        player.giveItem(drop1);
-                    } else {
-                        delete drop1;
-                    }
+                    // // Let player pick up items one at a time
+                    // std::cout << "Pick up item 1? (1: yes, 0: no)\n";
+                    // std::string pick;
+                    // getUserInput(0, 1, pick); // we will interpret 0->n 1->y below
+                    // if (pick == "1") {
+                    //     player.giveItem(drop1);
+                    // } else {
+                    //     delete drop1;
+                    // }
 
-                    std::cout << "Pick up item 2? (1: yes, 0: no)\n";
-                    getUserInput(0, 1, pick);
-                    if (pick == "1") {
-                        player.giveItem(drop2);
-                    } else {
-                        delete drop2;
+                    // std::cout << "Pick up item 2? (1: yes, 0: no)\n";
+                    // getUserInput(0, 1, pick);
+                    // if (pick == "1") {
+                    //     player.giveItem(drop2);
+                    // } else {
+                    //     delete drop2;
+                    // }
+
+                    Character::LootBundle loot(enemies[std::stoi(userInput) - 1]);
+                    if (loot.loot.size() > 0) {
+                        std::cout << "Enemy Dropped:" << std::endl;
+                        for (Item* i : loot.loot) {
+                            describe(i); std::cout << std::endl;
+                            std::cout << "\tPick up Item? (1: yes, 0 :no)\n";
+                            std::string pick;
+                            getUserInput(0, 1, pick); // we will interpret 0->n 1->y below
+                            if (pick == "1") {
+                                loot.GiveLoot(player,i);
+                            }
+                        }
                     }
 
                     enemies.erase(enemies.begin() + std::stoi(userInput) - 1);

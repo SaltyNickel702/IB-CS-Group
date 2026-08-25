@@ -3,6 +3,7 @@
 #include <format>
 #include <random>
 #include <cmath>
+#include <iostream>
 
 using namespace std;
 
@@ -18,16 +19,20 @@ Character::LootBundle::LootBundle (Character &c, float proportion) {
     for (Item *i : c.passives) al.push_back(i);
     for (Item *i : c.potions) al.push_back(i);
 
+    cout << "Total Drops: " << al.size() << endl;
+
     std::random_device rd;
     std::mt19937 g(rd());
     shuffle(al.begin(), al.end(), g);
     
-    int deleteToIndex = round((al.size()-1)*(1-proportion));
+    int deleteToIndex = round(al.size()*(1-proportion) - 1);
+    cout << "Deleting inclusive index: " << deleteToIndex << endl;
     for (int i = 0; i <= deleteToIndex; i++) {
         delete al.at(i);
     }
     al.erase(al.begin(), al.begin() + deleteToIndex + 1);
     loot = al;
+    cout << "Loot Size" << loot.size() << endl;
 
     //Delete loot on donor character
     c.weapon = nullptr;
@@ -43,7 +48,7 @@ void Character::LootBundle::GiveLoot(Character &c, int lI) {
         }
     } else {
         c.giveItem(loot.at(lI));
-        loot.erase(loot.begin() + lI + 1);
+        loot.erase(loot.begin() + lI);
     }
 }
 Character::LootBundle::~LootBundle () {

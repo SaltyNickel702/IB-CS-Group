@@ -20,6 +20,10 @@ struct Character {
         std::vector<Item*> loot;
         void GiveLoot (Character &destination, int lootIndex); //give specific loot piece
         void GiveLoot (Character &destination) { GiveLoot(destination, -1); }
+        void GiveLoot (Character &destination, Item* item) {
+            auto it = std::find(loot.begin(), loot.end(), item);
+            if (it != loot.end()) GiveLoot(destination, it - loot.begin());
+        }
 
         ~LootBundle();
     };
