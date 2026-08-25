@@ -178,8 +178,9 @@ int main()
         for (int i = 0; i < enemies.size(); i++)
         {
             // Enemy turn
+            int preHealth = player.health();
             enemies[i].attack(player);
-            std::cout << "Enemy " << enemies[i].name << " attacked player for " << enemies[i].weapon->baseDamage << " damage.\n";
+            std::cout << "Enemy " << enemies[i].name << " attacked player for " << preHealth - player.health() << " damage.\n";
             std::cout << "Player has " << player.health() << " health remaining.\n";
         }
         playerTurn = true;
