@@ -7,7 +7,7 @@ using namespace std;
 
 int main () {
 	UI u(100,20);
-	u.fillChar = '.';
+	u.fillChar = " ";
 
 	UI::Sprite* S = new UI::Sprite(7,5);
 	string sStr = 	R"( /\_/\ )"
@@ -15,7 +15,9 @@ int main () {
 					R"(():::())"
 					R"( VV-VV )";
 
-	S->importFromString(sStr);
+	S->importFromString(sStr, "\033[31m");
+	
+	u.addSprite(S);
 	S->pos[1] = -5;
 	u.addSprite(S);
 
