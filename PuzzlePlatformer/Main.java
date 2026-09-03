@@ -158,16 +158,7 @@ public class Main extends Application {
         gc.setFont(new Font(24));
         gc.fillText("Health: " + health, 60, 60);
 
-        if (player1.x > canvasWidth) {
-            player1.done = true;
-        }
-        if (player2.x > canvasWidth) {
-            player2.done = true;
-        }
-        if (player1.done && player2.done) {
-            currentStage++;
-            player1.done = false;
-            player2.done = false;
+        if (player1.complete(canvasWidth) && player2.complete(canvasWidth)) {
             if (currentStage >= stages.length) {
                 running = false;
             } else {
@@ -175,6 +166,24 @@ public class Main extends Application {
                 player2.startLevel(stages[currentStage]);
             }
         }
+
+        // if (player1.x > canvasWidth) {
+        //     player1.done = true;
+        // }
+        // if (player2.x > canvasWidth) {
+        //     player2.done = true;
+        // }
+        // if (player1.done && player2.done) {
+        //     currentStage++;
+        //     player1.done = false;
+        //     player2.done = false;
+        //     if (currentStage >= stages.length) {
+        //         running = false;
+        //     } else {
+        //         player1.startLevel(stages[currentStage]);
+        //         player2.startLevel(stages[currentStage]);
+        //     }
+        // }
     }
 
     private void renderGameOver(GraphicsContext gc) {

@@ -6,7 +6,7 @@ import java.util.Set;
 public class Player {
     public double x, y, sx, sy;
     public int width, height, playerID;
-    public boolean done = false;
+    private boolean done = false;
     
     public Player(int w, int h, int id) {
         width = w;
@@ -94,10 +94,16 @@ public class Player {
 
     }
 
+    public boolean complete(int canvasWidth) {
+        done = x + width > canvasWidth;
+        return done;
+    }
+
     public void startLevel(Level level) {
         x = level.startX;
         y = level.startY;
         sx = 0;
         sy = 0;
+        done = false;
     }
 }
