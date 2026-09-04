@@ -25,8 +25,8 @@ public class Main extends Application {
     public Level[] stages = new Level[1];
     public int currentStage = 0;
 
-    public Player player1 = new Player(25, 50, 1);
-    public Player player2 = new Player(25, 50, 2);
+    public Runner player1 = new Runner(25, 50);
+    public Jumper player2 = new Jumper(25, 50);
 
     public int health = 3;
 
