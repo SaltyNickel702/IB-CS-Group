@@ -162,6 +162,7 @@ public class Main extends Application {
             if (currentStage >= stages.length) {
                 running = false;
             } else {
+                currentStage ++;
                 player1.startLevel(stages[currentStage]);
                 player2.startLevel(stages[currentStage]);
             }
