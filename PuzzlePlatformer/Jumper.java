@@ -19,6 +19,17 @@ public class Jumper extends Player {
         super.move(level, tileSize);
     }
 
+    @Override
+    protected void useAbility(Level level, int tileSize) {
+        // Teleport to projectile
+        sx = Math.signum(projectile.x - x);
+        // sy = Math.signum(projectile.y - y);
+        sy = 0;
+        x = projectile.x;
+        y = projectile.y;
+        projectile.done = false;
+    }
+
     
     // public void updateInputs(Set<KeyCode> KeysPressed, Level level, int tileSize) {
     //         if (KeysPressed.contains(KeyCode.W) && level.isOnGround(x, y, width, height, tileSize)) {

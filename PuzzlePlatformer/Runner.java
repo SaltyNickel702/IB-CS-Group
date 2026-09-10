@@ -6,7 +6,7 @@ public class Runner extends Player {
     public Runner(int w, int h) {
         super(w, h);
         playerID = 1;
-        projectile = new Projectile(5, -2, 0.5);
+        projectile = new Projectile(10, -2, 0.5);
         keys = new KeyCode[4];
         keys[0] = KeyCode.UP;
         keys[1] = KeyCode.LEFT;

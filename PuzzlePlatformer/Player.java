@@ -75,6 +75,9 @@ public class Player {
         }
 
         projectile.move(level, tileSize);
+        if (projectile.done()) {
+            useAbility(level, tileSize);
+        }
 
     }
 
@@ -99,6 +102,10 @@ public class Player {
     public boolean complete(int canvasWidth) {
         done = x + width > canvasWidth;
         return done;
+    }
+
+    protected void useAbility(Level level, int tileSize) {
+
     }
 
     public void startLevel(Level level) {
