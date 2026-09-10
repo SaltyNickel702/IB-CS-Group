@@ -25,8 +25,10 @@ public class Main extends Application {
     public Level[] stages = new Level[1];
     public int currentStage = 0;
 
-    public Runner player1 = new Runner(25, 50);
-    public Jumper player2 = new Jumper(25, 50);
+    Player[] players = new Player[2];
+
+    // public Runner player1 = new Runner(25, 50);
+    // public Jumper player2 = new Jumper(25, 50);
 
     public int health = 3;
 
@@ -52,8 +54,11 @@ public class Main extends Application {
 
         stages[0] = createTestLevel();
 
-        player1.startLevel(stages[currentStage]);
-        player2.startLevel(stages[currentStage]);
+        players[0] = new Runner(25, 50);
+        players[1] = new Jumper(25, 50);
+
+        players[0].startLevel(stages[currentStage]);
+        players[1].startLevel(stages[currentStage]);
 
         // The Game Loop (runs roughly 60 times per second)
         gameLoop = new AnimationTimer() {
@@ -118,13 +123,18 @@ public class Main extends Application {
             return;
         }
 
-        player1.move(keysPressed, level, tileSize);
-        player2.move(keysPressed, level, tileSize);
-        level.updateGateStates(keysPressed, player1, player2, tileSize);
+        for (Player p : players) {
+            p.updateInputs(keysPressed, level, tileSize);
+            p.move(level, tileSize);
+        }
+        
+        level.updateGateStates(keysPressed, players[0], players[1], tileSize);
 
-        health = Math.min(3, health + level.collectCoins(player1) + level.collectCoins(player2));
-        handleHazard(player1, level);
-        handleHazard(player2, level);
+        health = Math.min(3, health + level.collectCoins(players[0]) + level.collectCoins(players[1]));
+        for (Player p : players) {
+            handleHazard(p, level);
+        }
+        
         if (health <= 0) {
             health = 0;
             running = false;
@@ -140,8 +150,9 @@ public class Main extends Application {
     }
 
     private void resetPlayers(Level level) {
-        player1.startLevel(level);
-        player2.startLevel(level);
+        for (Player p : players) {
+            p.startLevel(level);
+        }
     }
 
     private void renderGraphics(GraphicsContext gc) {
@@ -151,20 +162,22 @@ public class Main extends Application {
 
         stages[currentStage].render(gc, tileSize);
 
-        player1.render(gc);
-        player2.render(gc);
+        for (Player p : players) {
+            p.render(gc);
+        }
 
         gc.setFill(Color.BLACK);
         gc.setFont(new Font(24));
         gc.fillText("Health: " + health, 60, 60);
 
-        if (player1.complete(canvasWidth) && player2.complete(canvasWidth)) {
+        if (players[0].complete(canvasWidth) && players[1].complete(canvasWidth)) {
             if (currentStage >= stages.length) {
                 running = false;
             } else {
                 currentStage ++;
-                player1.startLevel(stages[currentStage]);
-                player2.startLevel(stages[currentStage]);
+                for (Player p : players) {
+                    p.startLevel(stages[currentStage]);
+                }
             }
         }
 

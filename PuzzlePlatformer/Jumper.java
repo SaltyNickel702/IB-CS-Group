@@ -25,11 +25,30 @@ public class Jumper extends Player {
         sx = Math.signum(projectile.x - x);
         // sy = Math.signum(projectile.y - y);
         sy = 0;
-        x = projectile.x;
-        y = projectile.y;
+        x = projectile.x - width/2;
+        y = projectile.y - height/2;
         projectile.done = false;
+        projectile.render = false;
     }
 
+    @Override 
+    protected void updateInputs(Set<KeyCode> KeysPressed, Level level, int tileSize) {
+        if (KeysPressed.contains(keys[0]) && level.isOnGround(x, y, width, height, tileSize)) {
+            sy = -15; // jump
+        }
+
+        
+        if (KeysPressed.contains(keys[1])) {
+            sx = -3; // move left
+        } else if (KeysPressed.contains(keys[2])) {
+            sx = 3; // move right
+        }
+        if (KeysPressed.contains(keys[3])) {
+            if (projectile != null) {
+                projectile.launch(x + width/2, y - height/5, 1);
+            }
+        }
+    }
     
     // public void updateInputs(Set<KeyCode> KeysPressed, Level level, int tileSize) {
     //         if (KeysPressed.contains(KeyCode.W) && level.isOnGround(x, y, width, height, tileSize)) {

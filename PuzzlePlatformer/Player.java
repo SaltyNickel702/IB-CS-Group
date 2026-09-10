@@ -82,21 +82,21 @@ public class Player {
     }
 
     protected void updateInputs(Set<KeyCode> KeysPressed, Level level, int tileSize) {
-        if (KeysPressed.contains(keys[0]) && level.isOnGround(x, y, width, height, tileSize)) {
-            sy = -10; // jump
-        }
+        // if (KeysPressed.contains(keys[0]) && level.isOnGround(x, y, width, height, tileSize)) {
+        //     sy = -10; // jump
+        // }
 
         
-        if (KeysPressed.contains(keys[1])) {
-            sx = -5; // move left
-        } else if (KeysPressed.contains(keys[2])) {
-            sx = 5; // move right
-        }
-        if (KeysPressed.contains(keys[3])) {
-            if (projectile != null) {
-                projectile.launch(x, y, 1);
-            }
-        }
+        // if (KeysPressed.contains(keys[1])) {
+        //     sx = -5; // move left
+        // } else if (KeysPressed.contains(keys[2])) {
+        //     sx = 5; // move right
+        // }
+        // if (KeysPressed.contains(keys[3])) {
+        //     if (projectile != null) {
+        //         projectile.launch(x + width/2, y - height/5, 1);
+        //     }
+        // }
     }
 
     public boolean complete(int canvasWidth) {
