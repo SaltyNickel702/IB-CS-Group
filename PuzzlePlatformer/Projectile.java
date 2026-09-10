@@ -13,13 +13,6 @@ public class Projectile {
         launched = false;
     }
 
-    public void update(Level level, int tileSize, GraphicsContext gc) {
-        if (launched) {
-            move(level, tileSize);
-        }
-        render(gc);
-    }
-
     public void launch (double x, double y, int dir) {
         this.x = x;
         this.y = y;
@@ -27,7 +20,8 @@ public class Projectile {
         launched = true;
     }
 
-    private void move(Level level, int tileSize) {
+    public void move(Level level, int tileSize) {
+        if (!launched) return;
         sy += gravity;
         x += sx;
         y += sy;
@@ -36,7 +30,7 @@ public class Projectile {
         }
     }
 
-    private void render(GraphicsContext gc) {
+    public void render(GraphicsContext gc) {
         gc.setFill(Color.BLACK);
         gc.fillOval(x, y, 5, 5);
     }

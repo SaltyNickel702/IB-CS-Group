@@ -1,4 +1,7 @@
+import java.util.Set;
+
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 public class Player {
@@ -6,6 +9,7 @@ public class Player {
     public int width, height, playerID;
     private boolean done = false;
     public Projectile projectile;
+    protected KeyCode[] keys;
     
     public Player(int w, int h) {
         width = w;
@@ -20,6 +24,7 @@ public class Player {
             gc.setFill(Color.BLUE);
         }
         gc.fillRect(x, y, width, height);
+        projectile.render(gc);
     }
 
     public void move(Level level, int tileSize) {
@@ -69,6 +74,26 @@ public class Player {
             sx = 0; // stop horizontal movement on collision
         }
 
+        projectile.move(level, tileSize);
+
+    }
+
+    protected void updateInputs(Set<KeyCode> KeysPressed, Level level, int tileSize) {
+        if (KeysPressed.contains(keys[0]) && level.isOnGround(x, y, width, height, tileSize)) {
+            sy = -10; // jump
+        }
+
+        
+        if (KeysPressed.contains(keys[1])) {
+            sx = -5; // move left
+        } else if (KeysPressed.contains(keys[2])) {
+            sx = 5; // move right
+        }
+        if (KeysPressed.contains(keys[3])) {
+            if (projectile != null) {
+                projectile.launch(x, y, 1);
+            }
+        }
     }
 
     public boolean complete(int canvasWidth) {
