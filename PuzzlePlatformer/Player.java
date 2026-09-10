@@ -5,6 +5,7 @@ public class Player {
     public double x, y, sx, sy;
     public int width, height, playerID;
     private boolean done = false;
+    public Projectile projectile;
     
     public Player(int w, int h) {
         width = w;

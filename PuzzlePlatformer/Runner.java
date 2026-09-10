@@ -6,6 +6,7 @@ public class Runner extends Player {
     public Runner(int w, int h) {
         super(w, h);
         playerID = 1;
+        projectile = new Projectile(5, -2, 0.5);
     }
 
     public void move(Set<KeyCode> KeysPressed, Level level, int tileSize) {
@@ -24,6 +25,9 @@ public class Runner extends Player {
                 sx = -6; // move left
             } else if (KeysPressed.contains(KeyCode.RIGHT)) {
                 sx = 6; // move right
+            }
+            if (KeysPressed.contains(KeyCode.SPACE)) {
+                projectile.launch(x, y, 1);
             }
     }
 }

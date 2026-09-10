@@ -80,6 +80,10 @@ public class Level {
         return false;
     }
 
+    public boolean collides(Projectile p, int tileSize) {
+        return checkCollisionPoint((int) p.x, (int) p.y, tileSize);
+    }
+
     public boolean updateGateStates(Set<KeyCode> keysPressed, Player player, int tileSize) {
         boolean anyGateOpen = false;
         for (Gate gate : gates) {
