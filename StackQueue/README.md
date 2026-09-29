@@ -1,0 +1,8 @@
+- C++ | Niko W and Emil G
+- Stack Output
+- Queue Output
+- A trace showing the collection after every operation
+- The result of the shared-reference test
+- Your method for controlling or preventing unwanted change
+- C++ only connects changes if a variable is by reference or pointer (& or *)
+- If you copy a collection, all elements inside will also be duplicated. To create a duplicate collection while keeping existing elements linked, the collection needs to contain pointers instead of instances
