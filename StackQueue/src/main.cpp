@@ -26,7 +26,7 @@ void chunkUpdater () {
 	while (GAME_RUNNING) {
 		if (!chunksToGen.empty()) {
 			vec2 v = chunksToGen.front();
-			Chunk c;
+			Chunk c(true);
 			chunks.at(v.x).at(v.y) = c;
 			chunksToGen.pop();
 		}
