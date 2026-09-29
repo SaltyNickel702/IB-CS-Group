@@ -28,6 +28,7 @@ void chunkUpdater () {
 			vec2 v = chunksToGen.front();
 			Chunk c;
 			chunks.at(v.x).at(v.y) = c;
+			chunksToGen.pop();
 		}
 	}
 }
