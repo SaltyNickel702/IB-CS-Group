@@ -18,6 +18,8 @@ struct vec2 {
 	float x, y;
 };
 
+int chunkSize = 3;
+int chunkDim = 5;
 array<array<Chunk,5>,5> chunks;
 
 queue<vec2> chunksToGen;
@@ -33,6 +35,9 @@ void chunkUpdater () {
 	}
 }
 
+void newFrame () {
+	
+}
 
 int main () {
 	chunkUpdateThread = new thread(chunkUpdater);
