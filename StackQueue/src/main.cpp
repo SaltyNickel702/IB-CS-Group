@@ -37,26 +37,31 @@ void chunkUpdater () {
 	while (GAME_RUNNING) {
 		char userInput;
 		if (!chunksToGen.empty() || !generatedChunks.empty()) {
-			cout << "Enter option: (1) Generate Next Chunk, (2) Redo last chunk";
-			cin.get(userInput); 
+			cout << "Enter option: (1) Generate Next Chunk, (2) Redo last chunk: ";
+			if (!(cin >> userInput)) {
+				GAME_RUNNING = false;
+				break;
+			}
 			if (userInput == '1') {
 				if (!chunksToGen.empty()) {
 					vec2 v = chunksToGen.front();
 					generateChunkAt(v);
 					chunksToGen.pop();
+					cout << "Generated chunk at (" << (int)v.x << ", " << (int)v.y << ")\n";
 				} else {
-					cout << "Queue empty";
+					cout << "Queue empty\n";
 				}
 			} else if (userInput == '2') {
 				if (!generatedChunks.empty()) {
 					vec2 lastPosition = generatedChunks.top();
 					generatedChunks.pop();
 					generateChunkAt(lastPosition);
+					cout << "Regenerated chunk at (" << (int)lastPosition.x << ", " << (int)lastPosition.y << ")\n";
 				} else {
-					cout << "Stack empty";
+					cout << "Stack empty\n";
 				}
 			} else {
-				cout <<  "Invalid Input";
+				cout << "Invalid input\n";
 			}
 		}
 	}
@@ -67,11 +72,11 @@ void newFrame () {
 }
 
 int main () {
-	chunksToGen.push(vec2(0,0));
-	chunksToGen.push(vec2(1,0));
-	chunksToGen.push(vec2(1,1));
-	chunksToGen.push(vec2(1,2));
-
+	for (int x = 0; x < chunkDim; ++x) {
+		for (int y = 0; y < chunkDim; ++y) {
+			chunksToGen.push(vec2(x, y));
+		}
+	}
 
 	chunkUpdateThread = new thread(chunkUpdater);
 
