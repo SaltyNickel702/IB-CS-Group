@@ -67,6 +67,12 @@ void newFrame () {
 }
 
 int main () {
+	chunksToGen.push(vec2(0,0));
+	chunksToGen.push(vec2(1,0));
+	chunksToGen.push(vec2(1,1));
+	chunksToGen.push(vec2(1,2));
+
+
 	chunkUpdateThread = new thread(chunkUpdater);
 
 
