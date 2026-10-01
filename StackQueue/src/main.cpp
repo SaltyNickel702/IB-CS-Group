@@ -33,6 +33,14 @@ void generateChunkAt (vec2 position) {
 	generatedChunks.push(position);
 }
 
+void newFrame () {
+	cout << "\n\n";
+	for (array<Chunk,5> a : chunks) {
+		for (Chunk c : a) cout << c.c;
+		cout << "\n";
+	}
+}
+
 void chunkUpdater () {
 	while (GAME_RUNNING) {
 		char userInput;
@@ -63,12 +71,9 @@ void chunkUpdater () {
 			} else {
 				cout << "Invalid input\n";
 			}
+			newFrame();
 		}
 	}
-}
-
-void newFrame () {
-	
 }
 
 int main () {
