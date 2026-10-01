@@ -1,5 +1,6 @@
 #include "Chunk.h"
 
+#include <array>
 #include <iostream>
 #include <stack>
 #include <queue>
@@ -23,14 +24,40 @@ int chunkDim = 5;
 array<array<Chunk,5>,5> chunks;
 
 queue<vec2> chunksToGen;
+stack<vec2> generatedChunks;
 thread* chunkUpdateThread;
+
+void generateChunkAt (vec2 position) {
+	Chunk c(true);
+	chunks.at((int)position.x).at((int)position.y) = c;
+	generatedChunks.push(position);
+}
+
 void chunkUpdater () {
 	while (GAME_RUNNING) {
-		if (!chunksToGen.empty()) {
-			vec2 v = chunksToGen.front();
-			Chunk c(true);
-			chunks.at(v.x).at(v.y) = c;
-			chunksToGen.pop();
+		char userInput;
+		if (!chunksToGen.empty() || !generatedChunks.empty()) {
+			cout << "Enter option: (1) Generate Next Chunk, (2) Redo last chunk";
+			cin.get(userInput); 
+			if (userInput == '1') {
+				if (!chunksToGen.empty()) {
+					vec2 v = chunksToGen.front();
+					generateChunkAt(v);
+					chunksToGen.pop();
+				} else {
+					cout << "Queue empty";
+				}
+			} else if (userInput == '2') {
+				if (!generatedChunks.empty()) {
+					vec2 lastPosition = generatedChunks.top();
+					generatedChunks.pop();
+					generateChunkAt(lastPosition);
+				} else {
+					cout << "Stack empty";
+				}
+			} else {
+				cout <<  "Invalid Input";
+			}
 		}
 	}
 }
@@ -41,6 +68,9 @@ void newFrame () {
 
 int main () {
 	chunkUpdateThread = new thread(chunkUpdater);
+
+
+	if (chunkUpdateThread->joinable()) chunkUpdateThread->join();
 
 	return 0;
 }
