@@ -1,1 +1,0 @@
-- Choose a stack or queue for one feature in your current project. Explain what enters the collection, what leaves it, in what order, and what could go wrong if the collection is changed unexpectedly.
