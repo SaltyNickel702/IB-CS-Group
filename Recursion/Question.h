@@ -12,7 +12,7 @@ struct Resolution {
 	virtual std::string resolve ();
 	std::string resolveText;
 
-	Question* optQuestion;
+	Resolution* optQuestion;
 };
 
 struct Question : Resolution {
