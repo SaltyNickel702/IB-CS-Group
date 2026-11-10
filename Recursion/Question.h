@@ -18,12 +18,12 @@ struct Resolution {
 struct Question : Resolution {
 	Question (std::string question);
 	
-	void addOption (std::string answer, Resolution resolution);
+	void addOption (std::string answer, Resolution &resolution);
 	
 	std::vector<std::string> getOptions ();
 	std::string resolve () override; // Asks the question
 
 	private:
-		std::map<std::string,Resolution> options;
+		std::map<std::string,Resolution*> options;
 		std::string question;
 };

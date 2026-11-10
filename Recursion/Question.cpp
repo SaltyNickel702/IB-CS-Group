@@ -11,17 +11,17 @@ string getInput () {
 	return s;
 }
 
-Resolution::Resolution (string s) : resolveText(s) {};
+Resolution::Resolution (string s) : resolveText(s), optQuestion(nullptr) {};
 Resolution::Resolution () : Resolution("") {};
 string Resolution::resolve () {
-	cout << resolveText << endl;
-	if (optQuestion) resolveText = optQuestion->resolve();
+	cout << "\nR: " << resolveText << endl;
+	if (optQuestion != nullptr) return optQuestion->resolve();
 	return resolveText;
 };
 
 Question::Question (string q) : question(q) {};
-void Question::addOption (string a, Resolution r) {
-	options.at(a) = r;
+void Question::addOption (string a, Resolution &r) {
+	options[a] = &r;
 }
 vector<string> Question::getOptions () {
 	vector<string> o;
@@ -31,9 +31,10 @@ vector<string> Question::getOptions () {
 	return o;
 }
 string Question::resolve () {
+
 	vector<string> opts = getOptions();
-	cout << format("Q: {}\n", question);
-	cout << "Options:\n" << endl;
+	cout << format("\nQ: {}\n", question);
+	cout << "Options:" << endl;
 	for (int i = 0; i < opts.size(); i++) {
 		cout << format("\t{}: {}\n",i,opts.at(i));
 	}
@@ -46,7 +47,8 @@ string Question::resolve () {
 		try {
 			int i = std::stoi(s);
 			if (i < 0 || i >= opts.size()) continue;
-			return opts.at(i);
+			string chosen = opts.at(i);
+			return options.at(chosen)->resolve();
 		} 
 		catch (const std::invalid_argument& e) {} 
 		catch (const std::out_of_range& e) {}
